@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'data_diri_page.dart';
 
 class AkunPage extends StatelessWidget {
   const AkunPage({super.key});
@@ -133,7 +134,50 @@ class AkunPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      _row(Icons.circle_outlined, 'Data diri'),
+
+                      // INI TOMBOL DATA DIRI YANG BARU - PASTI BISA DIPENCET
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            print('DATA DIRI DIPENCET');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DataDiriPage(),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 8,
+                            ),
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.circle_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(width: 14),
+                                Expanded(
+                                  child: Text(
+                                    'Data diri',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.chevron_right,
+                                  size: 16,
+                                  color: Colors.grey,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
                       _row(Icons.face_outlined, 'Registrasi wajah'),
                       _row(Icons.refresh, 'Reset wajah'),
                     ],

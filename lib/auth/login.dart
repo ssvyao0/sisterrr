@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final nisController = TextEditingController();
+  final passwordController = TextEditingController();
+  String errorText = '';
+
+  void _login() {
+    String nis = nisController.text.trim();
+    String password = passwordController.text.trim();
+
+    if (nis == '9249' && password == '20100619') {
+      setState(() => errorText = '');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else {
+      setState(() => errorText = 'NIS atau Password Salah');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +78,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const TextField(
-                    decoration: InputDecoration(
+                  TextField(
+                    controller: nisController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
                       hintText: 'Masukkan NIS atau username',
                       filled: true,
                       fillColor: Color(0xFFD9EAF0),
@@ -76,9 +102,10 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const TextField(
+                  TextField(
+                    controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Masukkan password',
                       filled: true,
                       fillColor: Color(0xFFD9EAF0),
@@ -89,19 +116,35 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
+
+                  // Tulisan error kalo salah
+                  if (errorText.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.red),
+                      ),
+                      child: Text(
+                        errorText,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                        );
-                      },
+                      onPressed: _login,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF1A5C9A),
                         shape: RoundedRectangleBorder(
